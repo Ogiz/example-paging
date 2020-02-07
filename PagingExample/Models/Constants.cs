@@ -2,7 +2,7 @@
 {
     public class Constants
     {
-        public const string ADDRESS_BOOK = "AddressBook";
-        public const string CONTACTS_GRID_VIEW = "contactsGridView";
+        public const string QUALITY_CONTROL = "QualityControl";
+        public const string MEASUREMENTS_GRID_VIEW = "measurementsGridView";
     }
 }

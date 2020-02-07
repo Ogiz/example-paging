@@ -1,0 +1,55 @@
+﻿@using DevExpress.Web
+@using DevExpress.XtraGrid
+@model GridViewModel
+
+
+@Html.DevExpress().GridView(settings =>
+{
+    settings.Name = Constants.MEASUREMENTS_GRID_VIEW;
+    settings.KeyFieldName = "Id";
+    settings.CallbackRouteValues = new {Controller = Constants.QUALITY_CONTROL, Action = "Index"};
+    settings.CustomBindingRouteValuesCollection.Add(
+        GridViewOperationType.Paging, new {Controller = Constants.QUALITY_CONTROL, Action = "GetPageResult"});
+    settings.CustomBindingRouteValuesCollection.Add(
+        GridViewOperationType.Filtering, new {Controller = Constants.QUALITY_CONTROL, Action = "GetFilterResult"});
+    settings.CustomBindingRouteValuesCollection.Add(
+        GridViewOperationType.Sorting, new {Controller = Constants.QUALITY_CONTROL, Action = "GetSortResult"});
+    
+    settings.KeyboardSupport = true;
+    settings.AccessKey = "G";
+    settings.Settings.ShowFilterRow = true;
+    settings.Settings.ShowFilterRowMenu = true;
+    settings.Settings.ShowFilterBar = GridViewStatusBarMode.Visible;
+    settings.SettingsBehavior.AllowGroup = false;
+    settings.SettingsBehavior.AllowSort = true;
+    settings.SettingsBehavior.SortMode = ColumnSortMode.Default;
+    settings.SettingsResizing.ColumnResizeMode = ColumnResizeMode.Control;
+    settings.Styles.AlternatingRow.BackColor = System.Drawing.Color.AliceBlue;
+    
+    settings.Settings.VerticalScrollBarMode = ScrollBarMode.Visible;
+    settings.Settings.VerticalScrollableHeight = 400;
+    settings.Settings.HorizontalScrollBarMode = ScrollBarMode.Auto; 
+    settings.Width = Unit.Percentage(100);
+    settings.Height = 300;
+
+    settings.Columns.Add(c =>
+    {
+        c.FieldName = "Id";
+        c.ColumnType = MVCxGridViewColumnType.SpinEdit;
+    });
+    settings.Columns.Add("TestCode", "Test code");
+    settings.Columns.Add("BatchNumber", "Batch");
+    settings.Columns.Add("MeasurementBatch", "Measurement batch", MVCxGridViewColumnType.SpinEdit);
+    settings.Columns.Add("MeasurementId", MVCxGridViewColumnType.SpinEdit);
+    settings.Columns.Add("Value", MVCxGridViewColumnType.SpinEdit);
+    settings.Columns.Add("MeasuringParameter", "Parameter");
+    settings.Columns.Add(c =>
+    {
+        c.FieldName = "Date";
+        c.EditorProperties().DateEdit(s =>
+        {
+            s.TimeSectionProperties.Visible = false;
+            s.DisplayFormatString = "dd.MM.yyyy";
+        });
+    });
+}).BindToCustomData(Model).GetHtml()

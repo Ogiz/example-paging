@@ -10,11 +10,11 @@ namespace PagingExample.Controllers
     /// <summary>
     /// This controller is 
     /// </summary>
-    public class AddressBookController : Controller
+    public class QualityControlController : Controller
     {
         public ActionResult Index()
         {
-            var model = GridViewExtension.GetViewModel(CONTACTS_GRID_VIEW);
+            var model = GridViewExtension.GetViewModel(MEASUREMENTS_GRID_VIEW);
             if (model != null) return CustomBinding(model);
 
             model = new GridViewModel
@@ -26,28 +26,28 @@ namespace PagingExample.Controllers
                     PageIndex = 0
                 },
             };
-            typeof(Contact).GetMembers().Select(x => x.Name).ToList()
+            typeof(Measurement).GetMembers().Select(x => x.Name).ToList()
                 .ForEach(n => model.Columns.Add(n));
             return CustomBinding(model);
         }
 
         public ActionResult GetPageResult(GridViewPagerState pagerState)
         {
-            var model = GridViewExtension.GetViewModel(CONTACTS_GRID_VIEW);
+            var model = GridViewExtension.GetViewModel(MEASUREMENTS_GRID_VIEW);
             model.ApplyPagingState(pagerState);
             return CustomBinding(model);
         }
 
         public ActionResult GetFilterResult(GridViewFilteringState filteringState)
         {
-            var model = GridViewExtension.GetViewModel(CONTACTS_GRID_VIEW);
+            var model = GridViewExtension.GetViewModel(MEASUREMENTS_GRID_VIEW);
             model.ApplyFilteringState(filteringState);
             return CustomBinding(model);
         }
 
         public ActionResult GetSortResult(GridViewColumnState columnState)
         {
-            var model = GridViewExtension.GetViewModel(CONTACTS_GRID_VIEW);
+            var model = GridViewExtension.GetViewModel(MEASUREMENTS_GRID_VIEW);
             model.ApplySortingState(columnState);
             return CustomBinding(model);
         }
@@ -61,7 +61,7 @@ namespace PagingExample.Controllers
                 Field = c.FieldName, SortIndex = c.SortIndex, SortOrder = c.SortOrder.ToString()
             });
 
-            var page = AddressBook.GetContactPage(
+            var page = QualityControl.GetMeasurementsPage(
                 model.Pager.PageIndex,
                 model.Pager.PageSize,
                 criterias,

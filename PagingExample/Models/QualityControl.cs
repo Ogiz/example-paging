@@ -5,31 +5,38 @@ using NPoco;
 
 namespace PagingExample.Models
 {
-    public static class AddressBook
+    public static class QualityControl
     {
         private const string SELECT_CONTACTS =
-        "SELECT sfppos_index\n" +
-        "    \t, sfppos_ime\n" +
-        "    \t, sfppos_priimek\n" +
-        "    \t, sfppa_kopis\n" +
-        "FROM sif_poslposebe\n" +
-        "    \tLEFT JOIN sif_poslpar ON sif_poslposebe.sfppos_poslpar = sif_poslpar.sfppa_sifra";
+            "SELECT podatek_meritev_id\n" +
+            "    , t.naziv_test\n" +
+            "    , ka.izhodna_sarza\n" +
+            "    , serija_meritve\n" +
+            "    , zap_stevilka_meritve\n" +
+            "    , m.vrednost_meritve\n" +
+            "    , m.datum_meritve\n" +
+            "    , p.oznaka\n" +
+            "FROM kon.Podatki_meritve m\n" +
+            "    INNER JOIN kon.Parametri p ON m.parameter_si = p.parameter_si\n" +
+            "    INNER JOIN kon.Kontrole_artiklov_testi kat ON m.kontrola_artikla_test_id = kat.kontrola_artikla_test_id\n" +
+            "    INNER JOIN kon.Kontrole_artiklov Ka ON kat.kontrola_artikla_id = Ka.kontrola_artikla_id\n" +
+            "    INNER JOIN kon.Testi T ON kat.test_si = T.test_si";
         
-        public static Page<Contact> GetContactPage(int pageIndex, int pageSize, string criteria,
+        public static Page<Measurement> GetMeasurementsPage(int pageIndex, int pageSize, string criteria,
             IEnumerable<SortOption> sortOptions)
         {
             using var db = new Database("main");
             var sql = new Sql(SELECT_CONTACTS);
 
-            var pocoData = db.PocoDataFactory.ForType(typeof(Contact));
+            var pocoData = db.PocoDataFactory.ForType(typeof(Measurement));
             
             SetFiltersCriteria(criteria, pocoData, sql);
             SetSorting(sortOptions, pocoData, sql);
             
             if (pageIndex == 0) pageIndex++;
             if (pageSize == 0) pageSize = 20;
-            var page = db.Page<Contact>(pageIndex, pageSize, sql);
-            return new Page<Contact>
+            var page = db.Page<Measurement>(pageIndex, pageSize, sql);
+            return new Page<Measurement>
             {
                 Items = page.Items,
                 TotalItems = (int) page.TotalItems

@@ -269,14 +269,14 @@
     <Compile Include="App_Start\BundleConfig.cs" />
     <Compile Include="App_Start\FilterConfig.cs" />
     <Compile Include="App_Start\RouteConfig.cs" />
-    <Compile Include="Controllers\AddressBookController.cs" />
+    <Compile Include="Controllers\QualityControlController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
-    <Compile Include="Models\AddressBook.cs" />
+    <Compile Include="Models\QualityControl.cs" />
     <Compile Include="Models\Constants.cs" />
-    <Compile Include="Models\Contact.cs" />
+    <Compile Include="Models\Measurement.cs" />
     <Compile Include="Models\Page.cs" />
     <Compile Include="Models\SortOption.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -303,7 +303,7 @@
     <Content Include="Scripts\jquery.validate.unobtrusive.js" />
     <Content Include="Scripts\jquery.validate.unobtrusive.min.js" />
     <Content Include="Scripts\modernizr-2.8.3.js" />
-    <Content Include="Views\AddressBook\_ContactsGridView.cshtml" />
+    <Content Include="Views\QualityControl\_ContactsGridView.cshtml" />
     <Content Include="Web.config" />
     <Content Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
